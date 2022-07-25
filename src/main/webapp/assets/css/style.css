@@ -1,0 +1,18 @@
+.btn-add {
+    margin-left: 65px !important;
+}
+
+.danger {
+    width: 1096px !important;
+    float: right !important;
+}
+
+td {
+    display: table-cell !important;
+    vertical-align: middle !important; /* Important */
+}
+
+.price {
+    color: #fe6f42;
+    font-weight: bold;
+}
