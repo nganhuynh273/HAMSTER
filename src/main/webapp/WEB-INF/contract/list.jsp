@@ -94,7 +94,7 @@
                                         <th>ID Nhân viên</th>
                                         <th>ID Khách hàng</th>
                                         <th>ID Dịch vụ</th>
-                                        <th>Actions</th>
+<%--                                        <th>Actions</th>--%>
                                     </tr>
                                     </thead>
 
@@ -110,20 +110,24 @@
                                             <td>${contract.getEndDate()}
 <%--                                                <fmt:formatDate pattern = "dd/MM/yyyy" value = "${contract.getEndDate()}" />--%>
                                             </td>
-                                            <td>${contract.getDeposit()}</td>
-                                            <td>${contract.getTotalMoney()}</td>
+                                            <td>
+                                                <fmt:formatNumber pattern = "###,###,### VNĐ" value="${contract.getDeposit()}"/>
+                                            </td>
+                                            <td>
+                                                <fmt:formatNumber pattern = "###,###,### VNĐ" value="${contract.getTotalMoney()}"/>
+                                            </td>
                                             <td>${contract.getStaffId()}</td>
                                             <td>${contract.getCustomerId()}</td>
                                             <td>${contract.getServiceId()}</td>
-                                            <td>
-                                                <a title="Edit" href="/contract?action=edit&id=${customer.getId()}" class="btn btn-outline-secondary">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                                <a title="Delete" href="/contract?action=delete&id=${customer.getId()}" class="btn btn-outline-danger" onclick="onDelete(${contract.getId()})">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+<%--                                            <td>--%>
+<%--                                                <a title="Edit" href="/contract?action=edit&id=${customer.getId()}" class="btn btn-outline-secondary">--%>
+<%--                                                    <i class="fas fa-pencil-alt"></i>--%>
+<%--                                                </a>--%>
+<%--                                                <a title="Delete" href="/contract?action=delete&id=${customer.getId()}" class="btn btn-outline-danger" onclick="onDelete(${contract.getId()})">--%>
+<%--                                                    <i class="fas fa-trash"></i>--%>
+<%--                                                </a>--%>
 
-                                            </td>
+<%--                                            </td>--%>
                                         </tr>
                                     </c:forEach>
                                     </tbody>

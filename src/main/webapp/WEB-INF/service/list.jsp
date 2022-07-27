@@ -97,7 +97,7 @@
                                         <th>Mô tả tiện lợi khác</th>
                                         <th>Diện tích hồ bơi</th>
                                         <th>Số tầng</th>
-                                        <th>Actions</th>
+<%--                                        <th>Actions</th>--%>
                                     </tr>
                                     </thead>
 
@@ -108,7 +108,10 @@
                                             <td>${service.getId()}</td>
                                             <td>${service.getName()}</td>
                                             <td>${service.getArea()}</td>
-                                            <td>${service.getCost()}</td>
+                                            <td>
+                                                <fmt:formatNumber pattern = "###,###,### VNĐ" value="${service.getCost()}"/>
+
+                                            </td>
                                             <td>${service.getMaxPeople()}</td>
                                             <td>
                                                 <c:choose>
@@ -129,14 +132,14 @@
                                             <td>${service.getDescriptionOtherConvenience()}</td>
                                             <td>${service.getPoolArea()}</td>
                                             <td>${service.getNumberOfFloors()}</td>
-                                            <td>
-                                                <a title="Edit" href="/service?action=edit&id=${service.getId()}" class="btn btn-outline-secondary">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                                <a title="Delete" href="/service?action=delete&id=${service.getId()}" class="btn btn-outline-danger" onclick="onDelete(${customer.getId()})">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
+<%--                                            <td>--%>
+<%--                                                <a title="Edit" href="/service?action=edit&id=${service.getId()}" class="btn btn-outline-secondary">--%>
+<%--                                                    <i class="fas fa-pencil-alt"></i>--%>
+<%--                                                </a>--%>
+<%--                                                <a title="Delete" href="/service?action=delete&id=${service.getId()}" class="btn btn-outline-danger" onclick="onDelete(${customer.getId()})">--%>
+<%--                                                    <i class="fas fa-trash"></i>--%>
+<%--                                                </a>--%>
+<%--                                            </td>--%>
                                         </tr>
                                     </c:forEach>
                                     </tbody>

@@ -16,6 +16,30 @@ import java.util.List;
 @WebServlet(name = "ServiceServlet", urlPatterns = "/service")
 public class ServiceServlet extends HttpServlet {
     ServiceServiceImpl serviceService = new ServiceServiceImpl();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+
+        if (action == null) {
+            action = "";
+        }
+        try {
+            switch (action) {
+                case "create":
+                    showCreateForm(request, response);
+                    break;
+                default:
+                    listService(request, response);
+                    break;
+            }
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -55,30 +79,7 @@ public class ServiceServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/service/create.jsp").forward(request, response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action");
 
-        if (action == null) {
-            action = "";
-        }
-        try {
-            switch (action) {
-                case "create":
-                    showCreateForm(request, response);
-                    break;
-                default:
-                    listService(request, response);
-                    break;
-            }
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void listService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Service> serviceList = serviceService.showAllService();

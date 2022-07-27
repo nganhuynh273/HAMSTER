@@ -155,19 +155,6 @@ public class ContractServlet extends HttpServlet {
                 }
 
 
-                //staff.getId()
-//                if (contract.getStaffId() != staff.getId()) {
-//                    flag = false;
-//                    hashMap.put("staffId", "Mã nhân viên sai");
-//                }
-//                if (contract.getCustomerId() != customer.getId()) {
-//                    flag = false;
-//                    hashMap.put("customerId", "Mã khách hàng sai");
-//                }
-//                if(contract.getServiceId() != service.getId()) {
-//                    flag = false;
-//                    hashMap.put("serviceId", "Mã dịch vụ sai");
-//                }
 
 
                 if (flag) {
