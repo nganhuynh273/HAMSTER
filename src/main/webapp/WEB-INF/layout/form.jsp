@@ -68,7 +68,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h2 class="mb-4 text-info">Register Form</h2>
+                                <h2 class="mb-4 text-info">Login</h2>
 
                                 <form class="parsley-examples" method="post" autocomplete="off">
 

@@ -12,7 +12,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
@@ -77,13 +77,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <h2 class="mb-4 text-purple">QUẢN LÝ DỊCH VỤ</h2>
-                                <h4>
-                                    <c:if test='${requestScope["message"] != null}'>
-                                        <span class="message">${requestScope["message"]}</span>
-                                    </c:if>
-                                </h4>
+<%--                                <h4>--%>
+<%--                                    <c:if test='${requestScope["message"] != null}'>--%>
+<%--                                        <span class="message">${requestScope["message"]}</span>--%>
+<%--                                    </c:if>--%>
+<%--                                </h4>--%>
 
-                                <form action="/staff?action=create" class="parsley-examples" method="post" autocomplete="off">
+                                <form action="/service?action=create" class="parsley-examples" method="post" autocomplete="off">
                                     <div class="row mt-3">
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label for="name">Tên dịch vụ<span class="text-danger">*</span></label>
@@ -101,6 +101,7 @@
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label for="max_people">Số người ở tối đa<span class="text-danger">*</span></label>
                                             <input id="max_people" name="max_people" type="number" required="" class="form-control">
+                                            <span class="font-15 text-info">Lưu ý: Tối đa được phép ở là 15 người</span>
                                         </div>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label for="rental_type_id">Kiểu thuê<span class="text-danger">*</span></label>
@@ -148,11 +149,19 @@
 
                                         <div class="form-group text-right mb-0">
                                             <button class="btn btn-purple waves-effect waves-light mr-1" type="submit">
-                                                Add
+                                                Thêm dịch vụ
                                             </button>
                                             <a href="/service" class="btn btn-secondary waves-effect waves-light">
-                                                <span>Back</span>
+                                                <span>Quay trở lại</span>
                                             </a>
+                                            <p class="text-center">
+                                                <c:if test='${requestScope["message"] != null}'>
+                                                    <span class="message  text-success">${requestScope["message"]}</span>
+                                                </c:if>
+                                                <c:if test='${requestScope["success"] != null}'>
+                                                    <span class="message  text-success">${requestScope["success"]}</span>
+                                                </c:if>
+                                            </p>
                                         </div>
                                     </div>
                                 </form>
@@ -164,6 +173,32 @@
         </div>
 
         <%@ include file="/WEB-INF/layout/footer.jsp" %>
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        2022 © HAMSTER RESORT MANAGEMENT
+                    </div>
+                </div>
+
+                <c:choose>
+                    <c:when test = "${requestScope['message'] == null}" >
+                    </c:when>
+                    <c:when test='${requestScope["message"] == "Thêm dịch vụ thành công!"}'>
+                        <%@ include file="/alert/success.jsp"%>
+                    </c:when>
+                    <c:otherwise>
+                        <%@ include file="/alert/warning.jsp"%>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:if test='${requestScope["errors"] != null}'>
+                    <%@ include file="/alert/danger.jsp"%>
+                </c:if>
+            </div>
+        </footer>
+        <!-- end Footer -->
 
 
     </div>

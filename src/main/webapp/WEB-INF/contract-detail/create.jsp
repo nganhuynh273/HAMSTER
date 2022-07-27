@@ -12,7 +12,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
@@ -87,32 +87,43 @@
                                     <div class="row mt-3">
 
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
-                                            <select class="form-select" aria-label="Default select example" name="contract_id">
-                                                <option selected>Chọn ID hợp đồng</option>
-                                                <c:forEach items="${requestScope['contractList']}" var="contract">
-                                                    <option value="${contract.getId()}"><c:out value="Contract No. ${contract.getId()}"></c:out></option>
-                                                </c:forEach>
-                                            </select>
+                                            <label for="contract_id">ID hợp đồng<span class="text-danger">*</span></label>
+                                            <input type="number" name="contract_id" placeholder="Nhập ID hợp đồng" required=""
+                                            <%--                                                   value="${customer.getPhone()}" --%>
+                                                   class="form-control" id="contract_id">
                                         </div>
 
 
+
+<%--                                        <div class="form-group col-lg-4 col-md-6 col-sm-12">--%>
+<%--                                            <select class="form-select" aria-label="Default select example" name="accompanied_service_id">--%>
+<%--                                            <option selected>Chọn ID dịch vụ đính kèm</option>--%>
+<%--                                            <c:forEach items="${requestScope['accompaniedServiceList']}" var="accompaniedService">--%>
+<%--                                                <option value="${accompaniedService.getId()}">${accompaniedService.getName()}</option>--%>
+<%--                                            </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                        </div>--%>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
-                                            <select class="form-select" aria-label="Default select example" name="accompanied_service_id">
-                                            <option selected>Chọn ID dịch vụ đính kèm</option>
-                                            <c:forEach items="${requestScope['accompaniedServiceList']}" var="accompaniedService">
-                                                <option value="${accompaniedService.getId()}">${accompaniedService.getName()}</option>
-                                            </c:forEach>
+                                            <label for="accompanied_service_id">Chọn dịch vụ đính kèm<span class="text-danger">*</span></label>
+                                            <select class="form-control" data-toggle="select2" id="accompanied_service_id" name="accompanied_service_id">
+                                                <option disabled ${contract-detail == null ? "selected" : ""}>- Chọn dịch vụ đính kèm -</option>
+                                                <option value="1">Massage</option>
+                                                <option value="2">Karaoke</option>
+                                                <option value="3">Thức ăn</option>
+                                                <option value="4">Nước uống</option>
+                                                <option value="5">Thuê xe</option>
                                             </select>
                                         </div>
-                                    </div>
-
-                                    <div class="row mt-3">
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label for="quantity">Số lượng<span class="text-danger">*</span></label>
                                             <input type="number" name="quantity" placeholder="Nhập số lượng" required=""
                                             <%--                                                   value="${customer.getPhone()}" --%>
                                                    class="form-control" id="quantity">
                                         </div>
+
+                                    </div>
+
+                                    <div class="row mt-3">
 
 
                                         <div class="form-group text-right mb-0">
@@ -122,6 +133,14 @@
                                             <a href="/contract-detail" class="btn btn-secondary waves-effect waves-light">
                                                 <span>Quay trở lại</span>
                                             </a>
+                                            <p class="text-center">
+                                                <c:if test='${requestScope["message"] != null}'>
+                                                    <span class="message  text-success">${requestScope["message"]}</span>
+                                                </c:if>
+                                                <c:if test='${requestScope["success"] != null}'>
+                                                    <span class="message  text-success">${requestScope["success"]}</span>
+                                                </c:if>
+                                            </p>
                                         </div>
                                     </div>
                                 </form>
@@ -133,7 +152,32 @@
         </div>
 
         <%@ include file="/WEB-INF/layout/footer.jsp" %>
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        2022 © HAMSTER RESORT MANAGEMENT
+                    </div>
+                </div>
 
+                <c:choose>
+                    <c:when test = "${requestScope['message'] == null}" >
+                    </c:when>
+                    <c:when test='${requestScope["message"] == "Thêm hợp đồng chi tiết thành công!"}'>
+                        <%@ include file="/alert/success.jsp"%>
+                    </c:when>
+                    <c:otherwise>
+                        <%@ include file="/alert/warning.jsp"%>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:if test='${requestScope["errors"] != null}'>
+                    <%@ include file="/alert/danger.jsp"%>
+                </c:if>
+            </div>
+        </footer>
+        <!-- end Footer -->
 
     </div>
 

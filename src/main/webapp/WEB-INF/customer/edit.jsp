@@ -12,7 +12,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
@@ -130,11 +130,19 @@
 
                                     <div class="form-group text-right mb-0">
                                         <button class="btn btn-secondary waves-effect waves-light mr-1" type="submit">
-                                            Update
+                                            Cập nhật
                                         </button>
                                         <a href="/customer" class="btn btn-dark waves-effect waves-light">
-                                            <span>Back</span>
+                                            <span>Quay trở lại</span>
                                         </a>
+                                        <p class="text-center">
+                                            <c:if test='${requestScope["message"] != null}'>
+                                                <span class="message  text-success">${requestScope["message"]}</span>
+                                            </c:if>
+                                            <c:if test='${requestScope["errors"] != null}'>
+                                                <span class="errors  text-error">${requestScope["errors"]}</span>
+                                            </c:if>
+                                        </p>
                                     </div>
                             </div>
 
@@ -148,7 +156,7 @@
                                             <c:choose>
                                                 <c:when test = "${requestScope['message'] == null}" >
                                                 </c:when>
-                                                <c:when test='${requestScope["message"] == "Thêm sản phẩm thành công!"}'>
+                                                <c:when test='${requestScope["message"] == "Sửa khách hàng thành công!"}'>
                                                     <%@ include file="/alert/success.jsp"%>
                                                 </c:when>
                                                 <c:otherwise>

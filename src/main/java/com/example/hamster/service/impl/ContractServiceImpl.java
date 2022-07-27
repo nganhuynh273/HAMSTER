@@ -12,6 +12,7 @@ public class ContractServiceImpl implements IContractService {
 
     @Override
     public Contract showContract(int id) {
+
         return contractDAO.showContract(id);
     }
 

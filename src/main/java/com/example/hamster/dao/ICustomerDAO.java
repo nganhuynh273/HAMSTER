@@ -13,4 +13,5 @@ public interface ICustomerDAO {
     String deleteCustomer (int id) throws SQLException;
     List<Customer> searchCustomer(String search);
    boolean isIdCardExisted(String idCard) throws SQLException;
+   boolean isEmailExisted (String email) throws SQLException;
 }

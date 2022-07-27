@@ -13,7 +13,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- Notification css (Toast) -->
     <link href="/assets/libs/toastr/css/iziToast.min.css" rel="stylesheet" type="text/css">
 
@@ -220,7 +220,7 @@
 <script>
     function onDelete(id) {
         <%--document.getElementById("idCustomerDel").value = ${customer.getId()};--%>
-        if (confirm("Are you delete this customer!") == true) {
+        if (confirm("Bạn chắc chắn muốn xóa khách hàng này?") == true) {
             console.log("OK delete: " + "/customer?action=delete&id=" + id);
             window.location.href = "/customer?action=delete&id=" + id;
         } else {

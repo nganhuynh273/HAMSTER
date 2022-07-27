@@ -10,8 +10,9 @@ public interface IStaffDAO {
     List<Staff> showAllStaff();
     void insertStaff (Staff staff) throws SQLException;
     boolean updateStaff (Staff staff) throws SQLException;
-    void deleteStaff (int id) throws SQLException;
+    String deleteStaff (int id) throws SQLException;
     List<Staff> searchStaff (String search);
 
     boolean isExisted(Staff staff) throws SQLException;
+    boolean isIdCardExisted(String idCard) throws SQLException;
 }

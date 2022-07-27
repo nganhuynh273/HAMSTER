@@ -12,7 +12,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 

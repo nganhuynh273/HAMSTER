@@ -19,18 +19,9 @@ public class ValidationUtils {
     public static String maxDateOfBirthValid;
 
     public static boolean checkStartDate(LocalDate inputDate) {
-        // inputDate: 24/07/2022
-
-        int currentYear = LocalDate.now().getYear();
-        int validRange = 0;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String minDateString = "01/01/" + (currentYear - validRange);
-        LocalDate minDate = LocalDate.parse(minDateString, formatter);
-
-        //minDate: 01/01/2022
-        // inputDate: 01/01/22
-        validStartDate = minDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        return inputDate.isAfter(minDate) || inputDate.isEqual(minDate);
+        LocalDate currentDate = LocalDate.now();
+        validStartDate = currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return inputDate.isEqual(currentDate);
     }
 
     public static boolean checkEndDate(LocalDate inputDate) {

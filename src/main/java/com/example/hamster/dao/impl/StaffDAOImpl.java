@@ -6,6 +6,7 @@ import com.example.hamster.model.Staff;
 import com.example.hamster.util.MySQLConnUtils;
 
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,14 @@ public class StaffDAOImpl implements IStaffDAO {
             "position_id = ?, education_degree_id = ?, division_id = ?, username = ?, password = ? WHERE staff_id = ?;";
     private static final String DELETE_STAFF = "DELETE FROM staff WHERE staff_id = ?; ";
     private static final String SELECT_STAFF_BY_NAME = "SELECT * FROM staff WHERE substring_index(staff_name,' ', -1) LIKE ?;";
-    private static final String IS_PHONE_NUMBER_EXISTED = "CALL sp_is_phone_number_existed(?, ?)";
+    private static final String IS_PHONE_NUMBER_EXISTED = "SELECT * FROM hamster_resort.staff where staff_phone = ?";
+    private static final String IS_STAFF_IDCARD_EXISTED = "SELECT * FROM hamster_resort.staff where staff_id_card = ?";
+    private static final String IS_STAFF_EMAIL_EXISTED = "SELECT * FROM hamster_resort.staff where staff_email = ?";
+    private static final String IS_STAFF_USERNAME_EXISTED = "SELECT * FROM hamster_resort.staff where username = ?";
+    private static final String IS_STAFF_PASS_EXISTED = "SELECT * FROM hamster_resort.staff where pasword = ?";
     private ResultSet resultSet;
+
+    DecimalFormat format = new DecimalFormat("###,###,###" + " VNĐ");
 
     public StaffDAOImpl() {
     }
@@ -41,7 +48,7 @@ public class StaffDAOImpl implements IStaffDAO {
                 while (resultSet.next()) {
                     String name = resultSet.getString("staff_name");
                     Date birthday = resultSet.getDate("staff_birthday");
-                    int idCard = Integer.parseInt(resultSet.getString("staff_id_card"));
+                    String idCard = resultSet.getString("staff_id_card");
                     double salary = Double.parseDouble(resultSet.getString("staff_salary"));
                     String phone = resultSet.getString("staff_phone");
                     String email = resultSet.getString("staff_email");
@@ -83,7 +90,7 @@ public class StaffDAOImpl implements IStaffDAO {
                     int id = Integer.parseInt(resultSet.getString("staff_id"));
                     String name = resultSet.getString("staff_name");
                     Date birthday = resultSet.getDate("staff_birthday");
-                    int idCard = Integer.parseInt(resultSet.getString("staff_id_card"));
+                    String idCard = resultSet.getString("staff_id_card");
                     double salary = Double.parseDouble(resultSet.getString("staff_salary"));
                     String phone = resultSet.getString("staff_phone");
                     String email = resultSet.getString("staff_email");
@@ -122,7 +129,7 @@ public class StaffDAOImpl implements IStaffDAO {
                 preparedStatement = connection.prepareStatement(INSERT_STAFF);
                 preparedStatement.setString(1, staff.getName());
                 preparedStatement.setDate(2, staff.getBirthday());
-                preparedStatement.setInt(3, staff.getIdCard());
+                preparedStatement.setString(3, staff.getIdCard());
                 preparedStatement.setDouble(4, staff.getSalary());
                 preparedStatement.setString(5, staff.getPhone());
                 preparedStatement.setString(6, staff.getEmail());
@@ -158,7 +165,7 @@ public class StaffDAOImpl implements IStaffDAO {
                 preparedStatement = connection.prepareStatement(UPDATE_STAFF);
                 preparedStatement.setString(1, staff.getName());
                 preparedStatement.setDate(2, staff.getBirthday());
-                preparedStatement.setInt(3, staff.getIdCard());
+                preparedStatement.setString(3, staff.getIdCard());
                 preparedStatement.setDouble(4, staff.getSalary());
                 preparedStatement.setString(5, staff.getPhone());
                 preparedStatement.setString(6, staff.getEmail());
@@ -168,6 +175,7 @@ public class StaffDAOImpl implements IStaffDAO {
                 preparedStatement.setInt(10, staff.getDivisionId());
                 preparedStatement.setString(11, staff.getUsername());
                 preparedStatement.setString(12, staff.getPassword());
+                System.out.println(this.getClass() + " editStaff() query: " + preparedStatement);
                 preparedStatement.setInt(13, staff.getId());
                 rowUpdated = preparedStatement.executeUpdate() > 0;
                 return rowUpdated;
@@ -186,7 +194,7 @@ public class StaffDAOImpl implements IStaffDAO {
     }
 
     @Override
-    public void deleteStaff(int id) throws SQLException {
+    public String deleteStaff(int id) throws SQLException {
         Connection connection = ConnectionDB.getConnection();
         PreparedStatement preparedStatement = null;
         if (connection != null) {
@@ -205,6 +213,7 @@ public class StaffDAOImpl implements IStaffDAO {
                 ConnectionDB.close();
             }
         }
+        return null;
     }
 
     @Override
@@ -225,7 +234,7 @@ public class StaffDAOImpl implements IStaffDAO {
                     int id = Integer.parseInt(resultSet.getString("staff_id"));
                     String name = resultSet.getString("staff_name");
                     Date birthday = resultSet.getDate("staff_birthday");
-                    int idCard = Integer.parseInt(resultSet.getString("staff_id_card"));
+                    String idCard = resultSet.getString("staff_id_card");
                     double salary = Double.parseDouble(resultSet.getString("staff_salary"));
                     String phone = resultSet.getString("staff_phone");
                     String email = resultSet.getString("staff_email");
@@ -269,23 +278,20 @@ public class StaffDAOImpl implements IStaffDAO {
         }
     }
 
-    public boolean isPhoneNumberExisted(Staff staff) throws SQLException {
-        Connection connection = MySQLConnUtils.getSqlConnection();
-        CallableStatement statement = connection.prepareCall(IS_PHONE_NUMBER_EXISTED);
-        statement.setString(1, staff.getPhone());
-        statement.execute();
-        return statement.getBoolean(2);
+    public boolean isPhoneNumberExisted(String phone) throws SQLException {
+        Connection connection = ConnectionDB.getConnection();
+        PreparedStatement preparedStatement = null;
+        preparedStatement = connection.prepareStatement(IS_PHONE_NUMBER_EXISTED);
+        preparedStatement.setString(1, phone);
+        System.out.println(preparedStatement);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            return  true;
+        }
+        return false;
     }
 
-    private static final String IS_EMAIL_EXISTED = "CALL sp_is_email_existed(?, ?)";
 
-    public boolean isEmailExisted(Staff staff) throws SQLException {
-        Connection connection = MySQLConnUtils.getSqlConnection();
-        CallableStatement statement = connection.prepareCall(IS_EMAIL_EXISTED);
-        statement.setString(1, staff.getEmail());
-        statement.execute();
-        return statement.getBoolean(2);
-    }
     private static final String IS_USERNAME_EXISTED = "CALL sp_is_username_existed(?, ?)";
     public boolean isUsernameExisted(Staff staff) throws SQLException {
         Connection connection = MySQLConnUtils.getSqlConnection();
@@ -298,4 +304,42 @@ public class StaffDAOImpl implements IStaffDAO {
     public boolean isExisted(Staff staff) throws SQLException {
         return false;
     }
+    public boolean isIdCardExisted(String idCard) throws SQLException {
+        Connection connection = ConnectionDB.getConnection();
+        PreparedStatement preparedStatement = null;
+        preparedStatement = connection.prepareStatement(IS_STAFF_IDCARD_EXISTED);
+        preparedStatement.setString(1, String.valueOf(idCard));
+
+        System.out.println(preparedStatement);
+        ResultSet rs = preparedStatement.executeQuery();
+        if(rs.next()){
+            return true;
+        }
+        return false;
+    }
+    public  boolean isEmailExisted (String email) throws  SQLException {
+        Connection connection = ConnectionDB.getConnection();
+        PreparedStatement preparedStatement = null;
+        preparedStatement = connection.prepareStatement(IS_STAFF_EMAIL_EXISTED);
+        preparedStatement.setString(1, email);
+        System.out.println(preparedStatement);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            return  true;
+        }
+        return false;
+    }
+    public  boolean isUserNameExisted (String username) throws  SQLException {
+        Connection connection = ConnectionDB.getConnection();
+        PreparedStatement preparedStatement = null;
+        preparedStatement = connection.prepareStatement(IS_STAFF_USERNAME_EXISTED);
+        preparedStatement.setString(1, username);
+        System.out.println(preparedStatement);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            return  true;
+        }
+        return false;
+    }
+
 }

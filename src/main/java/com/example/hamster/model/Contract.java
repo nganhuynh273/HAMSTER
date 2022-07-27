@@ -1,5 +1,7 @@
 package com.example.hamster.model;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -57,7 +59,7 @@ public class Contract {
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-
+    @Future(message = "Ngày kết thúc phải sau ngày hiện tại!")
     public LocalDate getEndDate() {
         return endDate;
     }

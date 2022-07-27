@@ -19,8 +19,8 @@ public class CustomerDAOImpl implements ICustomerDAO {
             "customer_address = ?, customer_type_id = ? WHERE customer_id = ?;";
     private static final String DELETE_CUSTOMER = "DELETE FROM customer WHERE customer_id = ?; ";
     private static final String SHOW_CUSTOMER = "SELECT * FROM customer WHERE substring_index(customer_name,' ', -1) LIKE ?;";
+
     private static final String IS_EMAIL_EXISTED = "CALL sp_is_email_existed(?, ?)";
-    private static final String GENDERS_LIST = "SELECT g.id,g.name FROM genders AS g;";
     private static final String IS_PHONE_NUMBER_EXISTED = "CALL sp_is_phone_number_existed(?, ?)";
     private static final String IS_CUSTOMER_IDCARD_EXISTED = "SELECT * FROM hamster_resort.customer where customer_id_card = ?";
 
@@ -279,6 +279,17 @@ public class CustomerDAOImpl implements ICustomerDAO {
         }
         return false;
     }
-
+    public  boolean isEmailExisted (String email) throws  SQLException {
+        Connection connection = ConnectionDB.getConnection();
+        PreparedStatement preparedStatement = null;
+        preparedStatement = connection.prepareStatement(SHOW_CUSTOMER);
+        preparedStatement.setString(1, email);
+        System.out.println(preparedStatement);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            return  true;
+        }
+        return false;
+    }
 
 }

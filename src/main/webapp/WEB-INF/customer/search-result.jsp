@@ -12,7 +12,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
@@ -75,7 +75,7 @@
             </div>
             <div class="col-4">
                 <div>
-                    <p class="navbar-text" style="float:right">Welcome ${sessionScope.user.employeeName}</p>
+                    <p class="navbar-text" style="float:right">Welcome ${sessionScope.user.staffName}</p>
                 </div>
             </div>
         </div>

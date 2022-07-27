@@ -1,5 +1,13 @@
 package com.example.hamster.model;
 
+import com.example.hamster.util.ValidationUtils;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class Service {
     private int id;
     private String name;
@@ -56,6 +64,10 @@ public class Service {
         this.id = id;
     }
 
+    @NotNull(message = "Tên không được để trống.")
+    @Length(max = 50, message = "Tên phải ít hơn 100 chữ cái")
+    @Pattern(regexp = ValidationUtils.FULL_NAME_REGEX,
+            message = "Tên chỉ được chứa các chữ cái, viết hoa chữ cái đầu tiên của mỗi từ và không có khoảng trắng thừa..")
     public String getName() {
         return name;
     }
@@ -64,6 +76,8 @@ public class Service {
         this.name = name;
     }
 
+    @Min(value = 50, message = "Lỗi! Vui lòng kiểm tra lại")
+    @Max(value = 500, message = "Tối đa 500m2")
     public int getArea() {
         return area;
     }
@@ -71,7 +85,7 @@ public class Service {
     public void setArea(int area) {
         this.area = area;
     }
-
+    @Min(value = 0, message = "Lỗi! Vui lòng kiểm tra lại")
     public double getCost() {
         return cost;
     }
@@ -79,7 +93,8 @@ public class Service {
     public void setCost(double cost) {
         this.cost = cost;
     }
-
+    @Min(value = 0, message = "Lỗi! Vui lòng kiểm tra lại")
+    @Max(value = 15, message = "Tối đa chỉ 15 người")
     public int getMaxPeople() {
         return maxPeople;
     }
@@ -119,7 +134,8 @@ public class Service {
     public void setDescriptionOtherConvenience(String descriptionOtherConvenience) {
         this.descriptionOtherConvenience = descriptionOtherConvenience;
     }
-
+    @Min(value = 10, message = "Lỗi! Vui lòng kiểm tra lại")
+    @Max(value = 100, message = "Tối đa 100m2")
     public double getPoolArea() {
         return poolArea;
     }
@@ -127,7 +143,8 @@ public class Service {
     public void setPoolArea(double poolArea) {
         this.poolArea = poolArea;
     }
-
+    @Min(value = 0, message = "Lỗi! Vui lòng kiểm tra lại")
+    @Max(value = 3, message = "Tối đa 3 tầng")
     public int getNumberOfFloors() {
         return numberOfFloors;
     }

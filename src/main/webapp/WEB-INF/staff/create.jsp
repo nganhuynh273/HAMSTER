@@ -12,7 +12,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
@@ -100,6 +100,7 @@
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label for="phone">Số điện thoại<span class="text-danger">*</span></label>
                                             <input id="phone" name="phone" type="text" required="" class="form-control">
+                                            <span class="font-15 text-muted">Ví dụ: 0795792763</span>
                                         </div>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label for="email">Email<span class="text-danger">*</span></label>
@@ -149,24 +150,27 @@
                                         </div>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label for="username">Username<span class="text-danger">*</span></label>
-                                            <input type="text" name="username" placeholder="" required=""
-                                                   class="form-control" id="username">
+                                            <input type="text" name="username" placeholder="" required="" class="form-control" id="username">
+                                            <span class="font-15 text-info">Lưu ý: Username phải bắt đầu bằng CHỮ A, các ký tự khác có thể là bảng chữ cái, số hoặc dấu gạch dưới và giới hạn độ dài là từ 8 đến 20 ký tự</span>
                                         </div>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label for="password">Password<span class="text-danger">*</span></label>
-                                            <input type="text" name="password" placeholder="" required=""
-                                                   class="form-control" id="password">
+                                            <input type="text" name="password" placeholder="" required="" class="form-control" id="password">
+                                            <span class="font-15 text-info">Lưu ý: Password tối thiểu tám ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt @ $!% * #? &</span>
                                         </div>
                                         <div class="form-group text-right mb-0">
                                             <button class="btn btn-purple waves-effect waves-light mr-1" type="submit">
-                                                Add
+                                                Thêm nhân viên
                                             </button>
                                             <a href="/staff" class="btn btn-secondary waves-effect waves-light">
-                                                <span>Back</span>
+                                                <span>Quay trở lại</span>
                                             </a>
                                             <p class="text-center">
                                                 <c:if test='${requestScope["message"] != null}'>
                                                     <span class="message  text-success">${requestScope["message"]}</span>
+                                                </c:if>
+                                                <c:if test='${requestScope["success"] != null}'>
+                                                    <span class="message  text-success">${requestScope["success"]}</span>
                                                 </c:if>
                                             </p>
                                         </div>
@@ -180,7 +184,32 @@
         </div>
 
         <%@ include file="/WEB-INF/layout/footer.jsp" %>
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        2022 © HAMSTER RESORT MANAGEMENT
+                    </div>
+                </div>
 
+                <c:choose>
+                    <c:when test = "${requestScope['message'] == null}" >
+                    </c:when>
+                    <c:when test='${requestScope["message"] == "Thêm nhân viên thành công!"}'>
+                        <%@ include file="/alert/success.jsp"%>
+                    </c:when>
+                    <c:otherwise>
+                        <%@ include file="/alert/warning.jsp"%>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:if test='${requestScope["errors"] != null}'>
+                    <%@ include file="/alert/danger.jsp"%>
+                </c:if>
+            </div>
+        </footer>
+        <!-- end Footer -->
 
     </div>
 

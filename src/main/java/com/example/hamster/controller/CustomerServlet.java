@@ -30,6 +30,35 @@ public class CustomerServlet extends HttpServlet {
     private String errors = "";
 
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        try {
+            switch (action) {
+                case "create":
+                    showCreateForm(request, response);
+                    break;
+                case "edit":
+                    showEditForm(request, response);
+                    break;
+                case "delete":
+                    deleteCustomer(request, response);
+                    break;
+                case "search":
+                    searchCustomer(request,response);
+                    break;
+                default:
+                    listCustomer(request, response);
+                    break;
+            }
+        } catch (SQLException | ParseException ex) {
+            throw new ServletException(ex);
+        }
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -56,9 +85,6 @@ public class CustomerServlet extends HttpServlet {
         }
     }
     private void createNewCustomer(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException, ParseException {
-//        List<String> errors = new ArrayList<>();
-//        List<Customer> customers = customerDAO.showListCustomer();
-
         Customer customer = new Customer();
         boolean flag = true;
         Map<String, String> hashMap = new HashMap<>();
@@ -114,6 +140,10 @@ public class CustomerServlet extends HttpServlet {
                     flag = false;
                     hashMap.put("id_card", "Thẻ khách hàng đã tồn tại");
                 }
+                if (customerDAO.isEmailExisted(email)) {
+                    flag = false;
+                    hashMap.put("email", "Email đã được đăng ký");
+                }
 
                 if (flag) {
                     customerDAO.insertCustomer(customer);
@@ -165,8 +195,6 @@ public class CustomerServlet extends HttpServlet {
 
 
     private void editCustomer(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException, ParseException {
-        List<String> errors = new ArrayList<>();
-        List<Customer> customers = customerDAO.showListCustomer();
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name").trim();
         Date birthday= Date.valueOf(request.getParameter("birthday"));
@@ -177,40 +205,10 @@ public class CustomerServlet extends HttpServlet {
         String address = request.getParameter("address");
         int customerTypeId = Integer.parseInt(request.getParameter("customer_type_id"));
 
-            Customer customer = new Customer(id, name, birthday, gender, idCard, phone, email, address, customerTypeId);
-            customerService.editCustomer(customer);
-            request.setAttribute("message", "Thêm mới thành công");
-        request.getRequestDispatcher("/WEB-INF/customer/edit.jsp").forward(request, response);
-
-    }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action");
-        if (action == null) {
-            action = "";
-        }
-        try {
-            switch (action) {
-                case "create":
-                    showCreateForm(request, response);
-                    break;
-                case "edit":
-                    showEditForm(request, response);
-                    break;
-                case "delete":
-                    deleteCustomer(request, response);
-                    break;
-                case "search":
-                    searchCustomer(request,response);
-                    break;
-                default:
-                    listCustomer(request, response);
-                    break;
-            }
-        } catch (SQLException | ParseException ex) {
-            throw new ServletException(ex);
-        }
+            Customer customers = new Customer(id, name, birthday, gender, idCard, phone, email, address, customerTypeId);
+            customerDAO.editCustomer(customers);
+        request.setAttribute("errors", "Sửa thông tin thất bại");
+        response.sendRedirect("/customer");
     }
 
 
@@ -236,14 +234,16 @@ public class CustomerServlet extends HttpServlet {
         List<Customer> customerList = customerService.showListCustomer();
         request.setAttribute("message", message);
         request.setAttribute("customerList", customerList);
-        request.getRequestDispatcher("/WEB-INF/customer/list.jsp").forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer/list.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
         Customer customer = customerService.showCustomer(id);
         request.setAttribute("customer", customer);
-        request.getRequestDispatcher("/WEB-INF/customer/edit.jsp").forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer/edit.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void searchCustomer(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {

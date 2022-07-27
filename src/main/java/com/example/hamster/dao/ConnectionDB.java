@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionDB {
-    private static final String jdbcURL = "jdbc:mysql://localhost:3306/hamster_resort?useSSL=false";
+    private static final String jdbcURL = "jdbc:mysql://localhost:3306/hamster_resort?useS SL=false";
     private static final String jdbcUsername = "root";
     private static final String jdbcPassword = "nganhuynh";
     private static Connection connection;
@@ -13,7 +13,7 @@ public class ConnectionDB {
     public static Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
         } catch (SQLException e) {
             // TODO Auto-generated catch block

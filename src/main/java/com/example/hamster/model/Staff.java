@@ -3,6 +3,8 @@ package com.example.hamster.model;
 import com.example.hamster.util.ValidationUtils;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.sql.Date;
@@ -11,7 +13,7 @@ public class Staff {
     private int id;
     private String name;
     private Date birthday;
-    private int idCard;
+    private String idCard;
     private double salary;
     private String phone;
     private String email;
@@ -25,7 +27,7 @@ public class Staff {
     public Staff() {
     }
 
-    public Staff(int id, String name, Date birthday, int idCard, double salary, String phone, String email,
+    public Staff(int id, String name, Date birthday, String idCard, double salary, String phone, String email,
                  String address, int positionId, int educationDegreeId, int divisionId, String username, String password) {
         this.id = id;
         this.name = name;
@@ -41,7 +43,7 @@ public class Staff {
         this.username = username;
         this.password = password;
     }
-    public Staff(String name, Date birthday, int idCard, double salary, String phone, String email, String address, int positionId, int educationDegreeId, int divisionId,
+    public Staff(String name, Date birthday, String idCard, double salary, String phone, String email, String address, int positionId, int educationDegreeId, int divisionId,
                  String username, String password) {
 
         this.name = name;
@@ -67,7 +69,7 @@ public class Staff {
     }
 
     @NotNull(message = "Tên không được để trống.")
-    @Length(max = 100, message = "Tên phải ít hơn 100 chữ cái")
+    @Length(max = 50, message = "Tên phải ít hơn 100 chữ cái")
     @Pattern(regexp = ValidationUtils.FULL_NAME_REGEX,
             message = "Tên chỉ được chứa các chữ cái, viết hoa chữ cái đầu tiên của mỗi từ và không có khoảng trắng thừa..")
     public String getName() {
@@ -87,14 +89,16 @@ public class Staff {
         this.birthday = birthday;
     }
 
-    public int getIdCard() {
+    @Length(min = 9, max = 9, message = "CCCD/CMND chỉ bao gồm 9 chữ số")
+    public String getIdCard() {
         return idCard;
     }
 
-    public void setIdCard(int idCard) {
+    public void setIdCard(String idCard) {
         this.idCard = idCard;
     }
-
+    @Min(value = 3000000, message = "Lương thấp nhất là 3.000.000VNĐ")
+    @Max(value = 100000000, message = "Lương cao nhất là 100.000.000VNĐ")
     public double getSalary() {
         return salary;
     }

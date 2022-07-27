@@ -105,7 +105,7 @@ public class Customer {
 
     @NotNull(message = "Email không được bỏ trống.")
     @Pattern(regexp = ValidationUtils.EMAIL_REGEX,
-            message = "Email không đúng định dạng!")
+            message = "Email đã tồn tại hoặc không đúng định dạng!")
     public String getEmail() {
         return email;
     }
@@ -129,4 +129,6 @@ public class Customer {
     public void setCustomerTypeId(int customerTypeId) {
         this.customerTypeId = customerTypeId;
     }
+
+
 }

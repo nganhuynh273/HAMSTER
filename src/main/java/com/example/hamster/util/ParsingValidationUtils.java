@@ -42,7 +42,7 @@ public class ParsingValidationUtils {
     }
     public static boolean isDateParsingType2(String date) {
         try {
-            new SimpleDateFormat("dd/MM/yyyy").parse(date);
+            new SimpleDateFormat("yyyy-MM-dd").parse(date);
             return true;
         } catch (final ParseException e) {
             return false;

@@ -13,7 +13,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- Notification css (Toast) -->
     <link href="/assets/libs/toastr/css/iziToast.min.css" rel="stylesheet" type="text/css">
 

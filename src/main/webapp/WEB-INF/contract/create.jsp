@@ -12,7 +12,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
@@ -90,8 +90,10 @@
                                             <label>Ngày bắt đầu hợp đồng<span class="text-danger">*</span></label>
                                             <div>
                                                 <div class="input-group">
-                                                    <input required="" type="text" name="start_date" class="form-control"
-                                                           placeholder="dd/MM/yyyy" data-provide="datepicker" data-date-autoclose="true"
+<%--                                                    <input required="" type="date" name="start_date" class="form-control"--%>
+<%--                                                           placeholder="dd/MM/yyyy" data-provide="datepicker" data-date-autoclose="true"--%>
+<%--                                                           value="${start_date}">--%>
+                                                    <input class="form-control" id="start_date" type="date" name="start_date" required=""
                                                            value="${start_date}">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
@@ -104,8 +106,7 @@
                                             <label>Ngày kết thúc hợp đồng<span class="text-danger">*</span></label>
                                             <div>
                                                 <div class="input-group">
-                                                    <input required="" type="text" name="end_date" class="form-control"
-                                                           placeholder="dd/MM/yyyy" data-provide="datepicker" data-date-autoclose="true"
+                                                    <input required="" type="date" name="end_date" class="form-control" id="end_date"
                                                            value="${end_date}">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
@@ -155,6 +156,14 @@
                                             <a href="/contract" class="btn btn-secondary waves-effect waves-light">
                                                 <span>Quay trở lại</span>
                                             </a>
+                                            <p class="text-center">
+                                                <c:if test='${requestScope["message"] != null}'>
+                                                    <span class="message  text-success">${requestScope["message"]}</span>
+                                                </c:if>
+                                                <c:if test='${requestScope["success"] != null}'>
+                                                    <span class="message  text-success">${requestScope["success"]}</span>
+                                                </c:if>
+                                            </p>
                                         </div>
                                     </div>
                                 </form>
@@ -167,7 +176,30 @@
 
         <%@ include file="/WEB-INF/layout/footer.jsp" %>
 
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        2022 © HAMSTER RESORT MANAGEMENT
+                    </div>
+                </div>
 
+                <c:choose>
+                    <c:when test = "${requestScope['message'] == null}" >
+                    </c:when>
+                    <c:when test='${requestScope["message"] == "Tạo hợp đồng thành công!"}'>
+                        <%@ include file="/alert/success.jsp"%>
+                    </c:when>
+                    <c:otherwise>
+                        <%@ include file="/alert/warning.jsp"%>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:if test='${requestScope["errors"] != null}'>
+                    <%@ include file="/alert/danger.jsp"%>
+                </c:if>
+            </div>
+        </footer>
     </div>
 
     <!-- ============================================================== -->

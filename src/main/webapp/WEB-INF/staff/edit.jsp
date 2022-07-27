@@ -12,7 +12,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
@@ -212,32 +212,67 @@
                                             <a href="/staff" class="btn btn-dark waves-effect waves-light">
                                                 <span>Back</span>
                                             </a>
+                                            <p class="text-center">
+                                                <c:if test='${requestScope["message"] != null}'>
+                                                    <span class="message  text-success">${requestScope["message"]}</span>
+                                                </c:if>
+                                                <c:if test='${requestScope["errors"] != null}'>
+                                                    <span class="errors  text-error">${requestScope["errors"]}</span>
+                                                </c:if>
+                                            </p>
                                         </div>
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Confirm update</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                       Bạn chắc chắn muốn chỉnh sửa nhân viên?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Yes</button>
-                                                        <button type="submit" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                                    </div>
-                                                </div>
-                                            </div>
+<%--                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
+<%--                                            <div class="modal-dialog">--%>
+<%--                                                <div class="modal-content">--%>
+<%--                                                    <div class="modal-header">--%>
+<%--                                                        <h5 class="modal-title" id="exampleModalLabel">Confirm update</h5>--%>
+<%--                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+<%--                                                            <span aria-hidden="true">&times;</span>--%>
+<%--                                                        </button>--%>
+<%--                                                    </div>--%>
+<%--                                                    <div class="modal-body">--%>
+<%--                                                       Bạn chắc chắn muốn chỉnh sửa nhân viên?--%>
+<%--                                                    </div>--%>
+<%--                                                    <div class="modal-footer">--%>
+<%--                                                        <button type="submit" class="btn btn-primary">Yes</button>--%>
+<%--                                                        <button type="submit" class="btn btn-secondary" data-dismiss="modal">No</button>--%>
+<%--                                                    </div>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
                                     </div>
 
 
                                     <%@ include file="/WEB-INF/layout/footer.jsp" %>
 
+                                        <!-- Footer Start -->
+                                        <footer class="footer">
+                                            <div class="container-fluid">
 
+                                                <c:choose>
+                                                    <c:when test = "${requestScope['message'] == null}" >
+                                                    </c:when>
+                                                    <c:when test='${requestScope["message"] == "Sửa nhân viên thành công!"}'>
+                                                        <%@ include file="/alert/success.jsp"%>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <%@ include file="/alert/warning.jsp"%>
+                                                    </c:otherwise>
+                                                </c:choose>
 
+                                                <c:if test='${requestScope["errors"] != null}'>
+                                                    <%@ include file="/alert/danger.jsp"%>
+                                                </c:if>
+                                            </div>
+                                        </footer>
+                                        <!-- end Footer -->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                2022 © HAMSTER RESORT MANAGEMENT
+                                            </div>
+                                        </div>
+
+                            </div>
+                        </div>
                         </div>
                         <!-- END wrapper -->
 

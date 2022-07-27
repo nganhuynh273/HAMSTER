@@ -13,7 +13,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- Notification css (Toast) -->
     <link href="/assets/libs/toastr/css/iziToast.min.css" rel="stylesheet" type="text/css">
 
@@ -104,11 +104,11 @@
                                         <tr>
 
                                             <td>${contract.getId()}</td>
-                                            <td>
-                                                <fmt:formatDate pattern = "dd/MM/yyyy" value = "${contract.getStartDate()}" />
+                                            <td>${contract.getStartDate()}
+<%--                                                <fmt:formatDate pattern = "dd/MM/yyyy" value = "${contract.getStartDate()}" />--%>
                                             </td>
-                                            <td>
-                                                <fmt:formatDate pattern = "dd/MM/yyyy" value = "${contract.getEndDate()}" />
+                                            <td>${contract.getEndDate()}
+<%--                                                <fmt:formatDate pattern = "dd/MM/yyyy" value = "${contract.getEndDate()}" />--%>
                                             </td>
                                             <td>${contract.getDeposit()}</td>
                                             <td>${contract.getTotalMoney()}</td>

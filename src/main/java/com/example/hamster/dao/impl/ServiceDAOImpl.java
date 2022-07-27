@@ -73,6 +73,7 @@ public class ServiceDAOImpl implements IServiceDAO {
                 resultSet = statement.executeQuery();
                 Service service = null;
                 while (resultSet.next()) {
+                    int id = Integer.parseInt(resultSet.getString("service_id"));
                     String name = resultSet.getString("service_name");
                     int area = resultSet.getInt("service_area");
                     double cost = resultSet.getDouble("service_area");
@@ -83,7 +84,7 @@ public class ServiceDAOImpl implements IServiceDAO {
                     String descriptionOtherConvenience = resultSet.getString("description_other_convenience");
                     double poolArea = resultSet.getDouble("pool_area");
                     int numberOfFloors = resultSet.getInt("number_of_floors");
-                    service = new Service(name, area, cost, maxPeople, rentalTypeId, serviceTypeId, standardRoom, descriptionOtherConvenience, poolArea, numberOfFloors);
+                    service = new Service(id, name, area, cost, maxPeople, rentalTypeId, serviceTypeId, standardRoom, descriptionOtherConvenience, poolArea, numberOfFloors);
                     serviceList.add(service);
                 }
             } catch (SQLException throwables) {

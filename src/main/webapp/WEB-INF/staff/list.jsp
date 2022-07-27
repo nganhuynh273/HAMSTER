@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.text.DecimalFormat" %><%--
   Created by IntelliJ IDEA.
   User: Ngan
   Date: 22/07/2022
@@ -13,7 +13,7 @@
 
 <head>
     <title>Hamster Resort</title>
-    <%@ include file="/layout/header-p1.jsp" %>
+    <%@ include file="/WEB-INF/layout/header-p1.jsp" %>
     <!-- Notification css (Toast) -->
     <link href="/assets/libs/toastr/css/iziToast.min.css" rel="stylesheet" type="text/css">
 
@@ -119,7 +119,10 @@
                                                 <fmt:formatDate pattern = "dd/MM/yyyy" value = "${staff.getBirthday()}" />
                                             </td>
                                             <td>${staff.getIdCard()}</td>
-                                            <td>${staff.getSalary()}</td>
+                                            <td>
+                                                <fmt:formatNumber pattern = "###,###,### VNĐ" value="${staff.getSalary()}"/>
+
+                                            </td>
                                             <td>${staff.getPhone()}</td>
                                             <td>${staff.getEmail()}</td>
                                             <td>${staff.getAddress()}</td>
@@ -156,9 +159,9 @@
                                                 <a title="Edit" href="/staff?action=edit&id=${staff.getId()}" class="btn btn-outline-secondary">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                <a title="Delete" href="/staff?action=delete&id=${staff.getId()}" class="btn btn-outline-danger" onclick="onDelete(${staff.getId()})">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <button type="button"  onclick="onDelete(${staff.getId()})" class="btn btn-danger" >
+                                                    <a title="Delete" href=""> <i class="fas fa-trash"></i></a>
+                                                </button>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -237,8 +240,14 @@
 <!-- App js -->
 <script src="/assets/js/app.min.js"></script>
 <script>
-    function onDelete(${staff.getId()}) {
-        document.getElementById("idStaffDel").value = ${staff.getId()};
+    function onDelete(id) {
+        <%--document.getElementById("idCustomerDel").value = ${customer.getId()};--%>
+        if (confirm("Bạn chắc chắn muốn xóa nhân viên này?") == true) {
+            console.log("OK delete: " + "/staff?action=delete&id=" + id);
+            window.location.href = "/staff?action=delete&id=" + id;
+        } else {
+            console.log("cancel");
+        }
     }
     $(document).ready(function () {
         $("#tableCustomer").DataTable({

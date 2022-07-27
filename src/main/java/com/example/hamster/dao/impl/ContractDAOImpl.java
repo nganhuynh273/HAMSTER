@@ -71,6 +71,7 @@ public class ContractDAOImpl implements IContractDAO {
                 resultSet = preparedStatement.executeQuery();
                 Contract contract = null;
                 while (resultSet.next()) {
+                    int id = resultSet.getInt("contract_id");
                     String startDate = resultSet.getString("contract_start_date");
                     String endDate = resultSet.getString("contract_end_date");
                     double deposit = Double.parseDouble(resultSet.getString("contract_deposit"));
@@ -78,7 +79,7 @@ public class ContractDAOImpl implements IContractDAO {
                     int staffId = Integer.parseInt(resultSet.getString("staff_id"));
                     int customerId = Integer.parseInt(resultSet.getString("customer_id"));
                     int serviceId = Integer.parseInt(resultSet.getString("service_id"));
-                    contract = new Contract(LocalDate.parse(startDate), LocalDate.parse(endDate), deposit, totalMoney, staffId, customerId, serviceId);
+                    contract = new Contract(id, LocalDate.parse(startDate), LocalDate.parse(endDate), deposit, totalMoney, staffId, customerId, serviceId);
                     contractList.add(contract);
                 }
             } catch (SQLException e) {
